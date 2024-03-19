@@ -26,7 +26,23 @@ public class App {
         //Random random = new Random();
         //solve(0, 0, random.nextInt(9) + 1);
     }
-
+    private void print_by_bloc(){
+        for(int i=0,k=0;i<3 && k<4;i++,k++){
+            if (i % 3 == 0 && i != 0)
+                    System.out.println("---------------------");
+    
+            for (int j = 0,l=0; j < 3 && l<4; j++,k++) {
+                if (j % 3 == 0 && j != 0)
+                        System.out.print(" | ");
+                if(board[i][j]==0)
+                        System.out.print("\u001B[36m" + board[3*i+k][3*j+l] + "\u001B[0m" + " ");
+                else
+                        System.out.print(board[3*i][3*j] + " ");
+                }
+                System.out.println();
+            }
+        }
+    
     private boolean solve(int row, int col, int num) {
         if (row == SIZE - 1 && col == SIZE)
             return true;
@@ -196,13 +212,14 @@ public class App {
     public static void main(String[] args) {
         App sudoku = new App();
         sudoku.generateBoard();
-        sudoku.printBoard();
-        System.out.println();
-        sudoku.removeCells();
-        sudoku.printBoard();
-        System.out.println();
-        sudoku.play_G();
-        sudoku.printBoard();
+        // sudoku.printBoard();
+        // System.out.println();
+        // sudoku.removeCells();
+        // sudoku.printBoard();
+        // System.out.println();
+        // sudoku.play_G();
+        // sudoku.printBoard();
+        sudoku.print_by_bloc();
         
     }
 }
