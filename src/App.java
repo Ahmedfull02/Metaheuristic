@@ -1,4 +1,3 @@
-import java.math.BigInteger;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -46,14 +45,14 @@ public class App {
     }
 
     private void generateBoard() {
-        Scanner scan = new Scanner(System.in);
+        // Scanner scan = new Scanner(System.in);
         // System.out.println("Welcome to sudoku Please : choose the number you want of cells to remove from board : ");;
         // int r = scan.nextInt();
         
         board = new int[SIZE][SIZE]; 
 
         board = new int[][] {
-            {5, 3, 8, 0, 7, 0, 0, 0, 0},
+            {5, 3, 0, 0, 7, 0, 0, 0, 0},
             {6, 0, 0, 1, 9, 5, 0, 0, 0},
             {0, 9, 8, 0, 0, 0, 0, 6, 0},
             {8, 0, 0, 0, 6, 0, 0, 0, 3},
@@ -121,66 +120,6 @@ public class App {
         return true;
     }
     
-    public boolean isValid() {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (board[i][j] != 0 && !isValidMove(i, j, board[i][j]))
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    public void play() {
-        Scanner scanner = new Scanner(System.in);
-        boolean test = false; 
-        while (!test||!isValid()) {
-            System.out.println("------------------------\n\n");
-            System.out.println("Current Sudoku Board:");
-            System.out.println("------------------------\n");
-            printBoard();
-            System.out.println();
-            System.out.print("Enter row (1-9): ");
-            int row = scanner.nextInt() - 1;
-            System.out.print("Enter column (1-9): ");
-            int col = scanner.nextInt() - 1;
-            System.out.print("Enter value (1-9): ");
-            int num = scanner.nextInt();
-
-            if (row < 0 || row >= SIZE || col < 0 || col >= SIZE || num < 1 || num > 9) {
-                System.out.println("\nInvalid input. Please try again.");
-                continue;
-            }
-
-            if (!isValidMove(row, col, num)) {
-                System.out.println("\nInvalid move. Please try again.");
-                continue;
-            }
-            
-            board[row][col] = num;
-            
-            
-            if(this.isComplete()==true)
-                break;
-        }
-    }
-    public void play_G() {
-        Scanner scanner = new Scanner(System.in);
-        boolean test = false; 
-        while (!test||!isValid()) {
-            System.out.println("Current Sudoku Board:");
-            printBoard();
-            solve_greedy();
-            test=isComplete();
-            if (test) {
-                break;
-            }
-        }
-        System.out.print("final ");printBoard();
-        scanner.close();
-    }
-    
-
     private boolean solve_greedy() {
         
         // Greedy approach - fill each cell with a valid number
@@ -223,46 +162,7 @@ public class App {
     }
 
     
-    private void print_by_bloc(){
-        for(int i=0,k=0;i<3 && k<4;i++,k++){
-            if (i % 3 == 0 && i != 0)
-                    System.out.println("---------------------");
     
-            for (int j = 0,l=0; j < 3 && l<4; j++,k++) {
-                if (j % 3 == 0 && j != 0)
-                        System.out.print(" | ");
-                if(board[i][j]==0)
-                        System.out.print("\u001B[36m" + board[3*i+k][3*j+l] + "\u001B[0m" + " ");
-                else
-                        System.out.print(board[3*i][3*j] + " ");
-                }
-                System.out.println();
-            }
-        }
-    
-    // private boolean solve(int row, int col, int num) {
-    //     if (row == SIZE - 1 && col == SIZE)
-    //         return true;
-
-    //     if (col == SIZE) {
-    //         row++;
-    //         col = 0;
-    //     }
-
-    //     if (board[row][col] != 0)
-    //         return solve(row, col + 1, num);
-
-    //     for (int i = 1; i <= SIZE; i++) {
-    //         if (isValidMove(row, col, i)) {
-    //             board[row][col] = i;
-    //             if (solve(row, col + 1, i))
-    //                 return true;
-    //             board[row][col] = 0;
-    //         }
-    //     }
-    //     return false;
-    // }
-
 
     public static void main(String[] args) {
         App sudoku = new App();
