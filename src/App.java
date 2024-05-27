@@ -167,14 +167,8 @@ public class App {
     public static void main(String[] args) {
         App sudoku = new App();
         sudoku.generateBoard();
-        // sudoku.printBoard();
-        // System.out.println();
-        // sudoku.removeCells(r);
-        // sudoku.printBoard();
-        // sudoku.solve_greedy();
-        // sudoku.play_G();
+        
         System.out.println();
-        // sudoku.printBoard();
-        // sudoku.printBoard();
+        
     }
 }
