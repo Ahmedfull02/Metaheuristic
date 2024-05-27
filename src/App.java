@@ -138,16 +138,12 @@ public class App {
                                 System.out.println(iter);
                                 printBoard();
                                 
-                            // }
                             if (solve_greedy()) {
                                 // Recursively call solve to continue solving the puzzle
-                                
                                 return true;
                             }
-                            
                         }
                     }
-                    
                 }
             }
         }
@@ -159,6 +155,5 @@ public class App {
         App sudoku = new App();
         sudoku.generateBoard();
         System.out.println();
-        
     }
 }
