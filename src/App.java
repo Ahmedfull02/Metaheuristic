@@ -7,8 +7,6 @@ public class App {
     public int[][] board;
     static double iter = 0;
 
-    
-
     public void printBoard() {
         System.out.println(" board: ");
         System.out.println("------------------------\n");
@@ -45,46 +43,44 @@ public class App {
     }
 
     private void generateBoard() {
-        // Scanner scan = new Scanner(System.in);
-        // System.out.println("Welcome to sudoku Please : choose the number you want of cells to remove from board : ");;
-        // int r = scan.nextInt();
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Welcome to sudoku Please : choose the number you want of cells to remove from board : ");;
+        int r = scan.nextInt();
         
         board = new int[SIZE][SIZE]; 
 
-        board = new int[][] {
-            {5, 3, 0, 0, 7, 0, 0, 0, 0},
-            {6, 0, 0, 1, 9, 5, 0, 0, 0},
-            {0, 9, 8, 0, 0, 0, 0, 6, 0},
-            {8, 0, 0, 0, 6, 0, 0, 0, 3},
-            {4, 0, 0, 8, 0, 3, 0, 0, 1},
-            {7, 0, 0, 0, 2, 0, 0, 0, 6},
-            {0, 6, 0, 0, 0, 0, 2, 8, 0},
-            {0, 0, 0, 4, 1, 9, 0, 0, 5},
-            {0, 0, 0, 0, 8, 0, 0, 7, 9}
-        };
         // board = new int[][] {
-        //     {5, 3, 4, 6, 7, 8, 9, 1, 2},
-        //     {6, 7, 2, 1, 9, 5, 3, 4, 8},
-        //     {1, 9, 8, 3, 4, 2, 5, 6, 7},
-        //     {8, 5, 9, 7, 6, 1, 4, 2, 3},
-        //     {4, 2, 6, 8, 5, 3, 7, 9, 1},
-        //     {7, 1, 3, 9, 2, 4, 8, 5, 6},
-        //     {9, 6, 1, 5, 3, 7, 2, 8, 4},
-        //     {2, 8, 7, 4, 1, 9, 6, 3, 5},
-        //     {3, 4, 5, 2, 8, 6, 1, 7, 9}
+        //     {5, 3, 0, 0, 7, 0, 0, 0, 0},
+        //     {6, 0, 0, 1, 9, 5, 0, 0, 0},
+        //     {0, 9, 8, 0, 0, 0, 0, 6, 0},
+        //     {8, 0, 0, 0, 6, 0, 0, 0, 3},
+        //     {4, 0, 0, 8, 0, 3, 0, 0, 1},
+        //     {7, 0, 0, 0, 2, 0, 0, 0, 6},
+        //     {0, 6, 0, 0, 0, 0, 2, 8, 0},
+        //     {0, 0, 0, 4, 1, 9, 0, 0, 5},
+        //     {0, 0, 0, 0, 8, 0, 0, 7, 9}
         // };
+        board = new int[][] {
+            {5, 3, 4, 6, 7, 8, 9, 1, 2},
+            {6, 7, 2, 1, 9, 5, 3, 4, 8},
+            {1, 9, 8, 3, 4, 2, 5, 6, 7},
+            {8, 5, 9, 7, 6, 1, 4, 2, 3},
+            {4, 2, 6, 8, 5, 3, 7, 9, 1},
+            {7, 1, 3, 9, 2, 4, 8, 5, 6},
+            {9, 6, 1, 5, 3, 7, 2, 8, 4},
+            {2, 8, 7, 4, 1, 9, 6, 3, 5},
+            {3, 4, 5, 2, 8, 6, 1, 7, 9}
+        };
         printBoard();
-        removeCells(5);
+        removeCells(r);
         // printBoard();    
-        if(solve_greedy()){
+        solve_greedy();
+        if(isComplete()){
             printBoard();
             System.out.println("Sudoku solved using greedy algorithm :) ");
         }
         else
-        System.out.println("It cannot solve using greedy algorithm");
-
-
-    
+        System.out.println("Greedy algorithm cannot solve that sudoku");
     }
 
     private boolean isValidMove(int row, int col, int num) {
@@ -97,8 +93,6 @@ public class App {
             if (board[i][col] == num)
                 return false;
         }
-
-
         int boxRow = row - row % 3;
         int boxCol = col - col % 3;
         for (int i = 0; i < 3; i++) {
@@ -137,37 +131,33 @@ public class App {
                             // Check if the current number is valid for the cell
                             board[row][col] = num;
                             // If the number is valid, set it in the cell
-                            if(iter % 1000==0){
+                            
+                            //print Iterations of completing board
+
                                 System.out.print("Iteration : ");
                                 System.out.println(iter);
                                 printBoard();
-                            }
+                                
+                            // }
                             if (solve_greedy()) {
                                 // Recursively call solve to continue solving the puzzle
                                 
                                 return true;
                             }
-                            // If the recursive call returns true, puzzle is solved, return true
-                            // Otherwise, backtrack by resetting the cell value and try the next number
-                            board[row][col] = EMPTY_CELL; // Undo the placement
+                            
                         }
                     }
-                    // If no valid number found for this cell, return false
-                    return false;
+                    
                 }
             }
         }
-        // If all cells are filled successfully, return true
+        // If all cells that could filled successfully, return true
         return true;
     }
-
-    
-    
 
     public static void main(String[] args) {
         App sudoku = new App();
         sudoku.generateBoard();
-        
         System.out.println();
         
     }
