@@ -1,18 +1,27 @@
-## Getting Started
+## Local search
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Local search is a heuristic method for solving optimization problems. It iteratively explores the solution space by moving from the current solution to a neighboring solution, with the goal of finding an improved solution. Here's a basic pseudo code for a local search algorithm:
 
-## Folder Structure
 
-The workspace contains two folders by default, where:
+# Here the pseudo code for _Local search_:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+    current_solution ← initial_solution
+    best_solution ← current_solution
+    best_objective_value ← objective_function(best_solution)
+    
+    iteration ← 0   
+    
+    while iteration < max_iterations do ## or some precised time
+        neighbor_solution ← neighborhood_function(current_solution)
+        neighbor_objective_value ← objective_function(neighbor_solution)
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+        if neighbor_objective_value < best_objective_value then
+            best_solution ← neighbor_solution
+            best_objective_value ← neighbor_objective_value
+        end if
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+        current_solution ← neighbor_solution
+        iteration ← iteration + 1
+    end while  
+    return best_solution
 
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
