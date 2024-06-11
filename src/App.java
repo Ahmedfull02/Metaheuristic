@@ -73,7 +73,7 @@ public class App {
         };
         printBoard();
         removeCells(r);
-        // printBoard();    
+        printBoard();    
         solve_greedy();
         if(isComplete()){
             printBoard();
