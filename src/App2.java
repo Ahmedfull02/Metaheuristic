@@ -2,7 +2,7 @@ import java.math.BigInteger;
 import java.util.Random;
 import java.util.Scanner;
 
-public class App {
+public class App2 {
     private static final int EMPTY_CELL = 0;
     private static final int SIZE = 9;
     public int[][] board;
@@ -265,7 +265,7 @@ public class App {
 
 
     public static void main(String[] args) {
-        App sudoku = new App();
+        App2 sudoku = new App2();
         sudoku.generateBoard();
         // sudoku.printBoard();
         // System.out.println();
