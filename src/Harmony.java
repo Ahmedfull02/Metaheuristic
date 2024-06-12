@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class App {
+public class Harmony {
     private static long seed = System.currentTimeMillis();
     private static Random random = new Random(seed);
     private static final int EMPTY_CELL = 0;
@@ -220,7 +220,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        App sudoku = new App();
+        Harmony sudoku = new Harmony();
         int [][] b = new int [SIZE][SIZE];
         sudoku.generateBoard();
         b = sudoku.board;
