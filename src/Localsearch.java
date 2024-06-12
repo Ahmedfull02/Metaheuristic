@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-public class App {
+public class Localsearch {
     private static final int EMPTY_CELL = 0;
     private static final int SIZE = 9;
     private static final int SUBGRID_SIZE = 3;
@@ -11,7 +11,7 @@ public class App {
     public static final int iter = 10;
     public static Random random;
     public static int r;
-    public static long seed = System.currentTimeMillis()+1;
+    public static long seed ;
 
     private static void generateBoard() {
         @SuppressWarnings("resource")
@@ -79,6 +79,7 @@ public class App {
     }
 
     private static void removeCells(int r) {
+        seed = System.currentTimeMillis(); 
         random = new Random(seed);
         int cellsToRemove = r; // Adjust the number of cells to remove
 
@@ -164,12 +165,13 @@ public class App {
     }
     
     private static int [] [] generateSolutionLocal(){
+        seed = System.currentTimeMillis();
         random = new Random(seed);
         int [][] sol = new int[SIZE][SIZE];
 
         for(int i = 0 ; i < SIZE ; i++){
             for(int j = 0 ; j < SIZE ; j++){
-                if(list_0[i][j]==1)
+                if(board[i][j]==0)
                     sol[i][j] = random.nextInt(9)+1;            
             }
         }
@@ -192,29 +194,28 @@ public class App {
 
     private static int[][] getNeighbor(int[][] sol) {
         int [][] news = new int[SIZE][SIZE];
-        random = new Random(seed);
+        // seed = System.currentTimeMillis();
+        random = new Random();
         int row1, col1,row2, col2; 
         do  {
             row1 = random.nextInt(9);
             col1 = random.nextInt(9);
             row2 = random.nextInt(9);
             col2 = random.nextInt(9);
-        }while(sol[row1][col1] == 0 && sol[row2][col2] == 0 || (row1 == row2 && col1 ==col2 ));
+        }while(sol[row1][col1] == 0 || sol[row2][col2] == 0 || (row1 == row2 && col1 ==col2 ));
         for(int i = 0;i<SIZE ; i++){
             for(int j=0 ;j < SIZE ;j++){
                 if(i==row1 && j == col1){
                     news[i][j]=sol[row2][col2];
                 }else{
                     if(i==row2 && j == col2){
-                        news[i][j]=sol[row1][col1];
-                    }
-                    else{
+                            news[i][j]=sol[row1][col1];
+                    }else{
                         news[i][j]=sol[i][j];
                     }
-                }  
-            }
+                }
+            }  
         }
-        
         return news;
     }
 
@@ -229,7 +230,7 @@ public class App {
         printBoard(currboard);
         int newob , ob = objectiveFunction(currboard);
         
-        System.out.println("Objective function of the 1st solution is : " +ob+"\n\n");
+        System.out.println("Objective function of the "+(i+1)+" solution is : " +ob+"\n\n");
         
         do{
             newSol = getNeighbor(currSol);
@@ -240,7 +241,7 @@ public class App {
             newob = objectiveFunction(newboard);
             System.out.println("Objective function of the neghbour solution is : " +newob+"\n\n");
             i++;
-            if (newob < ob) {
+            if (newob <= ob) {
                 for (int x = 0; x < SIZE; x++) {
                     for (int y = 0; y < SIZE; y++) {
                         currboard[x][y] = newboard[x][y];
@@ -254,7 +255,7 @@ public class App {
                 
                 ob = newob;
             }
-            }while (i<iter && ob>newob);
+        }while (i<iter && ob>=newob);
             
         
         System.out.println("Objective function for the iteration  last iteration is equal to " + ob);
@@ -265,20 +266,7 @@ public class App {
 
 
     public static void main(String[] args) {
-        App sudoku = new App();
         generateBoard();
-        // int [][] t =new int[SIZE][SIZE];
-        
-        // System.out.println("SOlution initial");
-        // t = generateSolutionLocal();
-        // System.out.println("initial SOlution");
-        // printBoard(t);
-        // System.out.println("OF init : "+objectiveFunction(t));
-        // System.out.println("neighbour Solution ");
-        // t = getNeighbor(t);
-        // System.out.println("neighbour OF : "+objectiveFunction(t));
-
-        // printBoard(t);
         solveLocal(board);
     }
 }
