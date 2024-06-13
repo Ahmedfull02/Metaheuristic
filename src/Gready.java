@@ -5,7 +5,8 @@ public class Gready {
     private static final int EMPTY_CELL = 0;
     private static final int SIZE = 9;
     public int[][] board;
-    static double iter = 0;
+    static int iter = 0;
+    public static int[][] list_0;
 
     public void printBoard() {
         System.out.println(" board: ");
@@ -17,9 +18,12 @@ public class Gready {
             for (int j = 0; j < SIZE; j++) {
                 if (j % 3 == 0 && j != 0)
                     System.out.print(" | ");
-                if(board[i][j]==0)
-                    System.out.print("\u001B[36m" + board[i][j] + "\u001B[0m" + " ");
-                
+                if(list_0[i][j] == 1){
+                    if(board[i][j]==0)
+                        System.out.print("\u001B[31m" + board[i][j] + "\u001B[0m" + " ");
+                    else 
+                        System.out.print("\u001B[36m" + board[i][j] + "\u001B[0m" + " ");
+                    }
                 else
                     System.out.print(board[i][j] + " ");
             }
@@ -44,9 +48,9 @@ public class Gready {
 
     private void generateBoard() {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Welcome to sudoku Please : choose the number you want of cells to remove from board : ");;
+        System.out.println("Welcome to sudoku Please : choose the number you want of cells to remove from board : (Choose between 2 or 79)");;
         int r = scan.nextInt();
-        
+        list_0 = new int [SIZE][SIZE];
         board = new int[SIZE][SIZE]; 
 
         // board = new int[][] {
@@ -70,10 +74,16 @@ public class Gready {
             {9, 6, 1, 5, 3, 7, 2, 8, 4},
             {2, 8, 7, 4, 1, 9, 6, 3, 5},
             {3, 4, 5, 2, 8, 6, 1, 7, 9}
-        };
-        printBoard();
+        }; 
+        
         removeCells(r);
-        printBoard();    
+        
+        for (int i = 0;i < SIZE;i++){
+            for (int j = 0;j < SIZE;j++){
+                if (board[i][j] == 0)
+                    list_0[i][j]=1;
+            }
+        }
         solve_greedy();
         if(isComplete()){
             printBoard();
@@ -115,39 +125,31 @@ public class Gready {
     }
     
     private boolean solve_greedy() {
-        
-        // Greedy approach - fill each cell with a valid number
+        printBoard();
+
         for (int row = 0; row < SIZE; row++) {
 
             for (int col = 0; col < SIZE; col++) {
 
                 if (board[row][col] == EMPTY_CELL) {
-                    
                     iter++;
-                    // If the current cell is empty, try filling it with a valid number
                     for (int num = 1; num <= SIZE; num++) {
-                        // Iterate through numbers from 1 to 9
                         if (isValidMove(row, col, num)) {
-                            // Check if the current number is valid for the cell
                             board[row][col] = num;
-                            // If the number is valid, set it in the cell
                             
-                            //print Iterations of completing board
-
-                                System.out.print("Iteration : ");
-                                System.out.println(iter);
+                                System.out.println("Iteration : " + iter);
                                 printBoard();
                                 
-                            if (solve_greedy()) {
-                                // Recursively call solve to continue solving the puzzle
-                                return true;
-                            }
+                            // if (solve_greedy()) {
+                                
+                            //     return true;
+                            // }
                         }
                     }
                 }
             }
         }
-        // If all cells that could filled successfully, return true
+        
         return true;
     }
 

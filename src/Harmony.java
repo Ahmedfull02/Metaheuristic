@@ -13,8 +13,9 @@ public class Harmony {
 
 
     public static void printBoard(int [][] board) {
-        System.out.println(" board: ");
-        System.out.println("------------------------\n");
+        if (objectiveFunction(board)==0){
+            System.out.println(" board: ");
+            System.out.println("------------------------\n");
         for (int i = 0; i < SIZE; i++) {
             if (i % 3 == 0 && i != 0)
                 System.out.println("-------------------------");
@@ -22,14 +23,35 @@ public class Harmony {
             for (int j = 0; j < SIZE; j++) {
                 if (j % 3 == 0 && j != 0)
                     System.out.print(" | ");
-                if(board[i][j] == 0 || list_0[i][j] == 1)
-                    System.out.print("\u001B[31m" + board[i][j] + "\u001B[0m" + " ");
+                if(list_0[i][j] == 1)
+                    System.out.print("\u001B[36m" + board[i][j] + "\u001B[0m" + " ");
                 else
                     System.out.print(board[i][j] + " ");
             }
             System.out.println();
         }
-        System.out.println('\n');
+        System.out.println('\n');    
+        }
+        else{
+            System.out.println(" board: ");
+            System.out.println("------------------------\n");
+            for (int i = 0; i < SIZE; i++) {
+                if (i % 3 == 0 && i != 0)
+                    System.out.println("-------------------------");
+
+                for (int j = 0; j < SIZE; j++) {
+                    if (j % 3 == 0 && j != 0)
+                        System.out.print(" | ");
+                    if(board[i][j] == 0 || list_0[i][j] == 1)
+                        System.out.print("\u001B[31m" + board[i][j] + "\u001B[0m" + " ");
+                    else
+                        System.out.print(board[i][j] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println('\n');
+    
+        }
     }
  
     private void removeCells(int r) {
@@ -227,6 +249,8 @@ public class Harmony {
         printBoard(b);
         int [][] sol = new int [SIZE][SIZE];
         sol = harmonySearchSudoku(b, 1000000, 0.3,0.1);
-        printBoard(sol);
+        
+        printBoard(b);
+        printBoard(sol);  
     }
 }

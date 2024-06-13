@@ -67,8 +67,12 @@ public class Localsearch {
             for (int j = 0; j < SIZE; j++) {
                 if (j % 3 == 0 && j != 0)
                     System.out.print(" | ");
-                if(board[i][j]==0 || list_0[i][j] == 1)
-                    System.out.print("\u001B[31m" + board[i][j] + "\u001B[0m" + " ");
+                if(list_0[i][j] == 1){
+                    if(board[i][j]==0)
+                        System.out.print("\u001B[36m" + board[i][j] + "\u001B[0m" + " ");
+                    else 
+                        System.out.print("\u001B[31m" + board[i][j] + "\u001B[0m" + " ");
+                }
                 
                 else
                     System.out.print(board[i][j] + " ");
@@ -258,7 +262,7 @@ public class Localsearch {
         }while (i<iter && ob>=newob);
             
         
-        System.out.println("Objective function for the iteration  last iteration is equal to " + ob);
+        System.out.println("Objective function for  last iteration is equal to " + ob);
         System.out.println("last board is");
         printBoard(currboard);
         
