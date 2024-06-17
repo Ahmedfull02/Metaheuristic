@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-public class Gready {
+public class Greedy {
     private static final int EMPTY_CELL = 0;
     private static final int SIZE = 9;
     public int[][] board;
@@ -154,7 +154,7 @@ public class Gready {
     }
 
     public static void main(String[] args) {
-        Gready sudoku = new Gready();
+        Greedy sudoku = new Greedy();
         sudoku.generateBoard();
         System.out.println();
     }
